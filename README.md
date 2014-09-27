@@ -1,5 +1,5 @@
 Blackjack-Code-Kata
 ===================
 
-This is a code kata for calculating who wins in Blackjack.
-Blog post to follow in the coming days.
+This is a code kata for determining what player or dealer wins in a game of Blackjack.
+Blog post to follow with explanation of the repository.

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true" bootstrap="autoloader.php">
+
+    <testsuites>
+        <testsuite name="Code Kata Test Suite">
+            <directory suffix=".php">./tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <logging>
+        <log type="coverage-html" target="./coverage" charset="UTF-8"
+             highlight="true" lowUpperBound="40" highLowerBound="80"/>
+    </logging>
+
+</phpunit>
