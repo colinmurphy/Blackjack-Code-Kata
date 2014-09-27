@@ -35,7 +35,7 @@ class Winner
      *
      * @var array
      */
-    protected $_perfectScorePlayers = array();
+    protected $_perfectScorePlayers = [];
 
     /**
      * Sets the players

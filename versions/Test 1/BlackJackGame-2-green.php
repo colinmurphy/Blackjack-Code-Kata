@@ -19,7 +19,7 @@ class BlackJackGame
 
     public function getWinner()
     {
-        return 'User 2';
+        return 'Player 2';
     }
 
 

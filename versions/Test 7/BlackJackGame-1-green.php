@@ -55,7 +55,7 @@ class BlackJackGame
      */
     public function getWinner()
     {
-        $winners = array();
+        $winners = [];
         $highestScore = 0;
         foreach ($this->getPlayers() as $player => $score) {
 
