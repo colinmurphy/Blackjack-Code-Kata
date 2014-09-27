@@ -23,10 +23,10 @@ class BlackJackGame
      */
     public function setPlayer($player, array $cards)
     {
-        $this->_players[$player] = array(
+        $this->_players[$player] = [
             'cards' => $cards,
             'score' => $this->calculateScore($cards)
-        );
+        ];
     }
 
     /**
