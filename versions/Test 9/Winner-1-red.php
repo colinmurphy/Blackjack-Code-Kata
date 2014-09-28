@@ -31,13 +31,6 @@ class Winner
     protected $_lowestCardScore = 5;
 
     /**
-     * Array of players with perfect scores
-     *
-     * @var array
-     */
-    protected $_perfectScorePlayers = [];
-
-    /**
      * Sets the players
      *
      * @param array $players
@@ -79,14 +72,10 @@ class Winner
                 $this->removeWinner();
             }
 
-            if ($this->hasJointHighestScore($score)) {
-
-                if ($this->hasLowestCardScore($cards)
-                    || $this->isDealer($player)
-                ) {
-                    $this->removeWinner();
-                }
-
+            if ($this->hasJointHighestScore($score)
+                && $this->hasLowestCardScore($cards)
+            ) {
+                $this->removeWinner();
             }
 
             if ($this->hasLowestCardScore($cards)) {
@@ -95,33 +84,36 @@ class Winner
 
             $this->setWinner($player)
                 ->setHighestScore($score);
-
-            if ($this->hasPerfectScore($cards, $score)) {
-                $this->setPerfectScorePlayers($player);
-            }
-
-            $this->setPerfectScoreWinners();
         }
         return $this;
     }
 
     /**
-     * This sets the perfect score winners
+     * Checks if the player is the dealer
+     *
+     * @param string $player
      *
      * @return bool
      */
-    protected function setPerfectScoreWinners()
+    protected function isDealer($player)
     {
-        if (empty($this->getPerfectScorePlayers())) {
-            return false;
-        }
+        return strtolower($player) === 'dealer';
+    }
 
-        $this->removeWinner();
-        foreach ($this->getPerfectScorePlayers() as $player) {
-            $this->setWinner($player);
+    /**
+     * Checks to see if a winner is the dealer
+     *
+     * @return bool
+     */
+    protected function isDealerAWinner()
+    {
+        foreach ($this->_winners as $player)
+        {
+            if ($this->isDealer($player)) {
+                return true;
+            }
         }
-
-        return true;
+        return false;
     }
 
     /**
@@ -158,18 +150,6 @@ class Winner
     protected function hasLowestCardScore(array $cards)
     {
         return count($cards) < $this->getLowestCardScore();
-    }
-
-    /**
-     * Checks if the player is the dealer
-     *
-     * @param string $player
-     *
-     * @return bool
-     */
-    protected function isDealer($player)
-    {
-        return strtolower($player) === 'dealer';
     }
 
     /**
@@ -215,7 +195,6 @@ class Winner
         return $this;
     }
 
-
     /**
      * Gets the winner
      *
@@ -236,28 +215,6 @@ class Winner
 
         return $winners;
     }
-
-    /**
-     * Checks to see if the player has the perfect score
-     *
-     * @param array $cards
-     * @param int $score
-     *
-     * @return bool
-     */
-    public function hasPerfectScore(array $cards, $score)
-    {
-        return count($cards) === 2 && (int)$score === 21;
-    }
-
-    /**
-     * @param string $player
-     */
-    protected function setPerfectScorePlayers($player)
-    {
-        $this->_perfectScorePlayers[] = $player;
-    }
-
 
     /**
      * Gets the players
@@ -283,14 +240,6 @@ class Winner
     public function getLowestCardScore()
     {
         return $this->_lowestCardScore;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPerfectScorePlayers()
-    {
-        return $this->_perfectScorePlayers;
     }
 
 }

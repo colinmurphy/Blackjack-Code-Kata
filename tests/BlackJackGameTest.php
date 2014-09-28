@@ -21,17 +21,19 @@ class BlackJackGameTest extends PHPUnit_Framework_TestCase
         return $this->game;
     }
 
-    public function test_two_players_no_picture_cards()
+    public function test_three_players_no_picture_cards()
     {
         $this->getGame()->setPlayer('Player 1', array(2, 3));
         $this->getGame()->setPlayer('Player 2', array(9, 9));
+        $this->getGame()->setPlayer('Player 3', array(9, 8));
         $this->assertEquals('Player 2', $this->getGame()->getWinner());
     }
 
-    public function test_two_players_with_picture_cards()
+    public function test_three_players_with_picture_cards()
     {
         $this->getGame()->setPlayer('Player 1', array(4, 2));
         $this->getGame()->setPlayer('Player 2', array('jack', 'queen'));
+        $this->getGame()->setPlayer('Player 3', array(9, 9));
         $this->assertEquals('Player 2', $this->getGame()->getWinner());
     }
 
@@ -79,25 +81,30 @@ class BlackJackGameTest extends PHPUnit_Framework_TestCase
 
     public function test_player_dealer_same_score_wins()
     {
-        $this->getGame()->setPlayer('Player 1', array('jack', 'queen'));
         $this->getGame()->setPlayer('Dealer', array('jack', 5, 5));
+        $this->getGame()->setPlayer('Player 1', array('jack', 'queen'));
+        $this->getGame()->setPlayer('Player 2', array('king', 2, 3, 4));
         $this->assertEquals('Dealer', $this->getGame()->getWinner());
     }
+
 
     public function test_player_with_perfect_score_dealer_same_score_player_wins()
     {
         $this->getGame()->setPlayer('Player 1', array('jack', 'ace'));
         $this->getGame()->setPlayer('Player 2', array('jack', 9, 2));
         $this->getGame()->setPlayer('Dealer', array('jack', 5, 6));
-        $this->assertEquals('Player 1', $this->getGame()->getWinner());
+        $this->getGame()->setPlayer('Player 3', array('queen', 'ace'));
+        $this->assertEquals(array('Player 1', 'Player 3'), $this->getGame()->getWinner());
     }
 
     public function test_player_and_dealer_with_perfect_score_dealer_wins()
     {
         $this->getGame()->setPlayer('Player 1', array('jack', 'ace'));
-        $this->getGame()->setPlayer('Player 2', array('jack', 9, 2));
         $this->getGame()->setPlayer('Dealer', array('jack', 'ace'));
+        $this->getGame()->setPlayer('Player 2', array('jack', 9, 2));
+        $this->getGame()->setPlayer('Player 3', array('king', 'ace'));
         $this->assertEquals('Dealer', $this->getGame()->getWinner());
     }
+
 
 }
